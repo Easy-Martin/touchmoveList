@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="zh_cn">
+<head>
+	<meta charset="UTF-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<style type="text/css">
+		*{
+			padding:0;
+			margin:0;
+		}
+		p{
+			height:30px;
+			line-height:30px;
+			border:1px solid #000;
+		}
+		p.active{
+			color:red;
+		}
+	</style>
+</head>
+<body>
+	<div id="div">
+		<p>11111111111</p>
+		<p>22222222222</p>
+		<p>33333333333</p>
+		<p>44444444444</p>
+		<p>55555555555</p>
+		<p>66666666666</p>
+		<p>77777777777</p>
+		<p>88888888888</p>
+		<p>99999999999</p>
+		<p>00000000000</p>
+	</div>
+	
+</body>
+
+<script type="text/javascript">
+	var oDiv = document.getElementById('div')
+	oDiv.addEventListener('touchmove',function(e){
+		var oP = this.getElementsByTagName('p');
+		var touch = e.targetTouches[0];
+		var divHeight = this.offsetHeight;
+		var num = oP.length;
+		var moveHeight = oP[0].offsetHeight;
+		var y = touch.pageY;
+		for(var i=1;i<num+1;i++){
+			if(y > moveHeight * (i-1) && y < moveHeight * i && !oP[i-1].className.indexOf('active') > -1){
+				for(var s=0;s<num;s++){
+					oP[s].className = '';
+				}
+				oP[i-1].className = 'active';
+			}
+			console.log(moveHeight*(i-1)+'--'+moveHeight*i+'--'+y)
+		}
+	},false)
+	
+</script> 
+</html>
+
