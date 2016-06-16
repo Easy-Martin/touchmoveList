@@ -1,60 +1,79 @@
 <!DOCTYPE HTML>
 <html lang="zh_cn">
+
 <head>
 	<meta charset="UTF-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title></title>
 	<style type="text/css">
-		*{
-			padding:0;
-			margin:0;
+		* {
+			padding: 0;
+			margin: 0;
 		}
-		p{
-			height:30px;
-			line-height:30px;
-			border:1px solid #000;
+
+		#div {
+			position: absolute;
+			top: 50%;
+			right: 0;
+			-webkit-transform: translate3d(0, -50%, 0);
+			-ms-transform: translate3d(0, -50%, 0);
+			-o-transform: translate3d(0, -50%, 0);
+			transform: translate3d(0, -50%, 0);
 		}
-		p.active{
-			color:red;
+
+		p {
+			height: 30px;
+			width: 30px;
+			line-height: 30px;
+			border: 1px solid #000;
+			text-align: center;
+		}
+
+		p.active {
+			color: red;
 		}
 	</style>
 </head>
+
 <body>
 	<div id="div">
-		<p>11111111111</p>
-		<p>22222222222</p>
-		<p>33333333333</p>
-		<p>44444444444</p>
-		<p>55555555555</p>
-		<p>66666666666</p>
-		<p>77777777777</p>
-		<p>88888888888</p>
-		<p>99999999999</p>
-		<p>00000000000</p>
+		<p>A</p>
+		<p>B</p>
+		<p>C</p>
+		<p>D</p>
+		<p>E</p>
+		<p>F</p>
+		<p>G</p>
+		<p>H</p>
+		<p>I</p>
+		<p>J</p>
 	</div>
-	
+<div id="text"></div>
 </body>
 
 <script type="text/javascript">
-	var oDiv = document.getElementById('div')
-	oDiv.addEventListener('touchmove',function(e){
-		var oP = this.getElementsByTagName('p');
+	var oDiv = document.getElementById('div');
+	var oText = document.getElementById('text');
+	var oP = oDiv.getElementsByTagName('p');
+	var divHeight = oDiv.offsetHeight;
+	var divTop = oDiv.offsetTop - (divHeight / 2);
+	console.log(divTop);
+	var num = oP.length;
+	var moveHeight = oP[0].offsetHeight;
+	oDiv.addEventListener('touchmove', function(e) {
 		var touch = e.targetTouches[0];
-		var divHeight = this.offsetHeight;
-		var num = oP.length;
-		var moveHeight = oP[0].offsetHeight;
 		var y = touch.pageY;
-		for(var i=1;i<num+1;i++){
-			if(y > moveHeight * (i-1) && y < moveHeight * i && !oP[i-1].className.indexOf('active') > -1){
-				for(var s=0;s<num;s++){
+		var movePos = y - divTop;
+		for (var i = 1; i < num + 1; i++) {
+			if (movePos > moveHeight * (i - 1) && movePos < moveHeight * i && !oP[i - 1].className.indexOf('active') > -1) {
+				for (var s = 0; s < num; s++) {
 					oP[s].className = '';
 				}
-				oP[i-1].className = 'active';
+				oP[i - 1].className = 'active';
+				oText.innerHTML = '滑动到'+oP[i - 1].innerText;
 			}
-			console.log(moveHeight*(i-1)+'--'+moveHeight*i+'--'+y)
 		}
-	},false)
-	
-</script> 
-</html>
+	}, false)
+</script>
 
+</html>
