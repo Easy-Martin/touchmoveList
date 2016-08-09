@@ -1,2 +1,2 @@
 # touchmoveList
-touchmoveList
+run demo.html
