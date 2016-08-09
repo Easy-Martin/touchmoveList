@@ -48,7 +48,9 @@
 		<p>I</p>
 		<p>J</p>
 	</div>
-<div id="text"></div>
+<div id="text">
+  切换手机模式浏览，在右边字母上滑动查看效果
+</div>
 </body>
 
 <script type="text/javascript">
@@ -57,22 +59,25 @@
 	var oP = oDiv.getElementsByTagName('p');
 	var divHeight = oDiv.offsetHeight;
 	var divTop = oDiv.offsetTop - (divHeight / 2);
-	console.log(divTop);
-	var num = oP.length;
 	var moveHeight = oP[0].offsetHeight;
 	oDiv.addEventListener('touchmove', function(e) {
 		var touch = e.targetTouches[0];
 		var y = touch.pageY;
 		var movePos = y - divTop;
-		for (var i = 1; i < num + 1; i++) {
-			if (movePos > moveHeight * (i - 1) && movePos < moveHeight * i && !oP[i - 1].className.indexOf('active') > -1) {
-				for (var s = 0; s < num; s++) {
-					oP[s].className = '';
-				}
-				oP[i - 1].className = 'active';
-				oText.innerHTML = '滑动到'+oP[i - 1].innerText;
+		Array.from(oP).forEach(function (item) {
+			var _topB = item.offsetTop;
+			var _bottomB = item.offsetTop + moveHeight;
+			if(movePos > _topB && movePos < _bottomB && item.className.indexOf('active') < 0){
+				Array.from(oP).forEach(function (ele) {
+					ele.className = '';
+				});
+				item.className = 'active';
+				console.log(item.className);
+				oText.innerHTML = '滑动到' + item.innerText;
+			} else {
+				return;
 			}
-		}
+		});
 	}, false)
 </script>
 
